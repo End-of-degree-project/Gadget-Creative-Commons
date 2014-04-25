@@ -1,0 +1,106 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.pablomartinez.tfg</groupId>
+  <artifactId>creative-commons-gadget-deployer</artifactId>
+  <name>A gadget for licensing</name>
+  <description>A gadget for kune meant for choosing one of the creative commons licenses</description>
+ 
+    <properties>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <wiab.version>0.4-incubator</wiab.version>
+ 
+    <!-- GWT 2.1.1 -->
+    <!-- 
+    <gwt.version>2.1.1</gwt.version>
+    <guice.version>3.0</guice.version>
+    <gwt.maven.version>2.5.1</gwt.maven.version>
+    <gwt-gin.version>1.0-r137</gwt-gin.version>
+    <gwt-gadgets.version>1.0.3</gwt-gadgets.version>
+     -->
+     
+     
+     
+    <!--  GWT 2.5.1 -->
+ 
+    <gwt.version>2.5.1</gwt.version>
+    <guice.version>3.0</guice.version>
+    <gwt.maven.version>2.5.1</gwt.maven.version>
+    <gin.version>2.1.0</gin.version>
+    <gwt-gadgets.version>1.2.1</gwt-gadgets.version>
+    
+    
+  </properties>
+
+  <dependencies>
+      
+  
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.10</version>
+      <scope>test</scope>
+    </dependency>
+ 
+ 
+    <dependency>
+      <groupId>com.google.gwt.google-apis</groupId>
+      <artifactId>gwt-gadgets</artifactId>
+      <version>${gwt-gadgets.version}</version>
+    </dependency>
+ 
+    <dependency>
+      <groupId>com.google.gwt</groupId>
+      <artifactId>gwt-user</artifactId>
+      <version>${gwt.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.inject</groupId>
+      <artifactId>guice</artifactId>
+      <version>${guice.version}</version>
+      <classifier>no_aop</classifier>
+    </dependency>
+    
+    <!-- For GWT 2.1.1 
+    <dependency>
+      <groupId>com.google.gwt</groupId>
+      <artifactId>gwt-gin</artifactId>
+      <version>${gwt-gin.version}</version>
+    </dependency>
+     -->    
+    <!--  For GWT 2.5.1 -->
+    <dependency>
+        <groupId>com.google.gwt.inject</groupId>
+        <artifactId>gin</artifactId>
+        <version>${gin.version}</version>
+    </dependency>
+ 
+    
+    </dependencies>  
+  
+     <build>
+    <plugins>
+        
+       <!--  -Dgwt.style=[PRETTY|DETAILED] -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>gwt-maven-plugin</artifactId>
+        <version>${gwt.maven.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+ 
+  
+    <outputDirectory>target/WEB-INF/classes
+    </outputDirectory>
+  
+  </build>
+</project>

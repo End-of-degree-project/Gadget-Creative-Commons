@@ -1,0 +1,10 @@
+gwt-unitCache/
+WEB-INF/
+batman.jpg
+robin.jpg
+*.class
+.*
+*.cache.html
+clear.cache.gif
+*.nocache.js
+!/.gitignore
