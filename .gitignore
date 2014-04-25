@@ -7,4 +7,7 @@ robin.jpg
 *.cache.html
 clear.cache.gif
 *.nocache.js
+*.cache.js
+*.devmode.js
+compilation-mappings.txt
 !/.gitignore
