@@ -123,10 +123,13 @@ public class CCGadgetMainPanel extends Composite {
               buttonYes.setVisible(false);
               buttonNo.setVisible(false);
               backButton.setVisible(false);
+              question.setVisible(false);
             }
             else{
               buttonYes.setVisible(true);
               buttonNo.setVisible(true);
+              backButton.setVisible(true);
+              question.setVisible(true);
             }
             
             license.setUrl(licenseImageUrl);
@@ -143,8 +146,11 @@ public class CCGadgetMainPanel extends Composite {
             });
             
             question.setText(nextQuestion);
+            
+            adjustHeight();
           }
         });
+        adjustHeight();
       }
     });
   }
@@ -278,4 +284,8 @@ public class CCGadgetMainPanel extends Composite {
     }
     else return null;
   }
+  
+  private static native void adjustHeight() /*-{
+    $wnd.gadgets.window.adjustHeight();
+  }-*/;
 }
