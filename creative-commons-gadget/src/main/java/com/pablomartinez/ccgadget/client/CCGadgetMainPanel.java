@@ -6,15 +6,20 @@ import java.util.List;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.thezukunft.wave.connector.StateUpdateEvent;
 import com.thezukunft.wave.connector.StateUpdateEventHandler;
@@ -39,6 +44,8 @@ public class CCGadgetMainPanel extends Composite {
   private static List<String> latestAnswers = new ArrayList<String>();
   
   public Button backButton;
+  
+  private HandlerRegistration handler = null;
   
   @Inject
   public CCGadgetMainPanel(final EventBus eventBus, final Wave wave,
@@ -85,11 +92,12 @@ public class CCGadgetMainPanel extends Composite {
           }
         });
         final Image license = new Image();
+        license.getElement().getStyle().setCursor(Cursor.POINTER);
         final VerticalPanel vp = new VerticalPanel();
         vp.add(question);
         vp.add(options);
-        vp.add(backButton);
         vp.add(license);
+        vp.add(backButton);
         initWidget(vp);
         
         eventBus.addHandler(StateUpdateEvent.TYPE, new StateUpdateEventHandler() {
@@ -107,19 +115,33 @@ public class CCGadgetMainPanel extends Composite {
             try { nc = QuestionState.valueOf(event.getState().get(NC_K)); }
             catch(NullPointerException e){ nc = QuestionState.UNANSWERED; }
             
-            String licenseUrl = getLicenseUrl(sa, nd, nc);
+            String licenseImageUrl = getLicenseImageUrl(sa, nd, nc);
+            final String licenseUrl = getLicenseUrl(licenseImageUrl);
             String nextQuestion = getQuestion(sa, nd, nc);
             
             if(nextQuestion == null){
               buttonYes.setVisible(false);
               buttonNo.setVisible(false);
+              backButton.setVisible(false);
             }
             else{
               buttonYes.setVisible(true);
               buttonNo.setVisible(true);
             }
             
-            license.setUrl(licenseUrl);
+            license.setUrl(licenseImageUrl);
+            
+            if(handler != null){
+              handler.removeHandler();
+            }
+            
+            handler = license.addClickHandler(new ClickHandler() {
+              @Override
+              public void onClick(ClickEvent event) {
+                Window.open(licenseUrl,"_blank","");
+              }
+            });
+            
             question.setText(nextQuestion);
           }
         });
@@ -199,7 +221,31 @@ public class CCGadgetMainPanel extends Composite {
     }
   }
   
-  private String getLicenseUrl(QuestionState sa, QuestionState nd, QuestionState nc){
+  private String getLicenseUrl(String licenseImageUrl){
+    if(licenseImageUrl.equals(messages.CC_BY())){
+      return messages.CC_BY_L();
+    }
+    else if(licenseImageUrl.equals(messages.CC_BY_NC())){
+      return messages.CC_BY_NC_L();
+    }
+    else if(licenseImageUrl.equals(messages.CC_BY_NC_ND())){
+      return messages.CC_BY_NC_ND_L();
+    }
+    else if(licenseImageUrl.equals(messages.CC_BY_NC_SA())){
+      return messages.CC_BY_NC_SA_L();
+    }
+    else if(licenseImageUrl.equals(messages.CC_BY_ND())){
+      return messages.CC_BY_ND_L();
+    }
+    else if(licenseImageUrl.equals(messages.CC_BY_SA())){
+      return messages.CC_BY_SA_L();
+    }
+    else{
+      return null;
+    }
+  }
+  
+  private String getLicenseImageUrl(QuestionState sa, QuestionState nd, QuestionState nc){
     if(nd.equals(QuestionState.ANSWERED_NO) && nc.equals(QuestionState.ANSWERED_NO)){
       return messages.CC_BY_NC_ND();
     }

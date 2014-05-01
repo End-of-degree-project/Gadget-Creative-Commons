@@ -18,4 +18,11 @@ public interface CCGadgetMessages extends Messages {
   String CC_BY_NC();
   String CC_BY_NC_SA();
   String CC_BY_NC_ND();
+  
+  String CC_BY_L();
+  String CC_BY_SA_L();
+  String CC_BY_ND_L();
+  String CC_BY_NC_L();
+  String CC_BY_NC_SA_L();
+  String CC_BY_NC_ND_L();
 }
