@@ -111,12 +111,12 @@ public class CCGadgetMainPanel extends Composite {
             String nextQuestion = getQuestion(sa, nd, nc);
             
             if(nextQuestion == null){
-              buttonYes.setEnabled(false);
-              buttonNo.setEnabled(false);
+              buttonYes.setVisible(false);
+              buttonNo.setVisible(false);
             }
             else{
-              buttonYes.setEnabled(true);
-              buttonNo.setEnabled(true);
+              buttonYes.setVisible(true);
+              buttonNo.setVisible(true);
             }
             
             license.setUrl(licenseUrl);
